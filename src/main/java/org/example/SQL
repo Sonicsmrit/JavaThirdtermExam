@@ -1,0 +1,116 @@
+GROUP C: 
+
+QUESTION NUMBER 1:
+
+CREATE TABLE "Departments" (
+	"DepartmentID"	INTEGER,
+	"DepartmentName"	VARCHAR(100) NOT NULL,
+	"Location"	VARCHAR(100),
+	PRIMARY KEY("DepartmentID")
+);
+
+
+CREATE TABLE "EmployeeDetails" (
+	"DetailID"	INTEGER,
+	"EmployeeID"	INTEGER UNIQUE,
+	"DateOfBirth"	DATE,
+	"Address"	VARCHAR(255),
+	"PhoneNumber"	VARCHAR(15),
+	PRIMARY KEY("DetailID"),
+	FOREIGN KEY("EmployeeID") REFERENCES "Employees"("EmployeeID")
+);
+
+CREATE TABLE "EmployeeProjects" (
+	"EmployeeID"	INTEGER,
+	"ProjectID"	INTEGER,
+	"Role"	VARCHAR(50),
+	"AssignedDate"	DATE,
+	PRIMARY KEY("EmployeeID","ProjectID"),
+	FOREIGN KEY("EmployeeID") REFERENCES "Employees"("EmployeeID"),
+	FOREIGN KEY("ProjectID") REFERENCES "Projects"("ProjectID")
+);
+
+CREATE TABLE "Employees" (
+	"EmployeeID"	INTEGER,
+	"DepartmentID"	INTEGER,
+	"FirstName"	VARCHAR(100) NOT NULL,
+	"LastName"	VARCHAR(100) NOT NULL,
+	"Position"	VARCHAR(50),
+	"Salary"	DECIMAL(10, 2),
+	PRIMARY KEY("EmployeeID"),
+	FOREIGN KEY("DepartmentID") REFERENCES "Departments"("DepartmentID")
+);
+
+CREATE TABLE "Projects" (
+	"ProjectID"	INTEGER,
+	"DepartmentID"	INTEGER,
+	"ProjectName"	VARCHAR(100) NOT NULL,
+	"Budget"	DECIMAL(15, 2),
+	PRIMARY KEY("ProjectID"),
+	FOREIGN KEY("DepartmentID") REFERENCES "Departments"("DepartmentID")
+);
+
+
+QUESTION 2:
+
+insert into "Departments" ("DepartmentID", "DepartmentName", "Location")
+ VALUES (1, 'Research & Development', 'Metropolis'), 
+(2, 'Cyber Security', 'Gotham City');
+
+
+insert into "Employees" ("EmployeeID", "DepartmentID", "FirstName", "LastName", "Position", "Salary") 
+VALUES (1, 1, 'Sonic', 'Hedgehog', 'Speed Analyst', 85000), 
+       (2, 2, 'Batman', 'Wayne', 'Cybersecurity Specialist', 120000);
+
+
+insert into "EmployeeDetails" ("DetailID", "EmployeeID", "DateOfBirth", "Address", "PhoneNumber")
+ VALUES (1, 1, '1991-06-23', 'Green Hill', '555-123-4567'),
+ (2, 2, '1939-05-27', 'Wayne Manor', '555-987-6543');
+
+insert into"Projects" ("ProjectID", "DepartmentID", "ProjectName", "Budget") 
+VALUES (1, 2, 'Batcomputer Upgrade', 1000000),
+ (2, 1, 'Chaos Energy Research', 500000);
+
+insert into "EmployeeProjects" ("EmployeeID", "ProjectID", "Role", "AssignedDate") 
+VALUES (1, 2, 'Lead Researcher', '2024-03-01'),
+ (2, 1, 'projectseer', '2024-03-02');
+
+QUESTION NUMBER 3:
+
+a)
+Answer: 
+select *  from "Employees";
+
+b)
+Answer:
+SELECT *  FROM "Employees"  
+WHERE "Department name" = “Cyber Security”;
+c)
+Answer: 
+select  
+    "employeeid" as "id",  
+    "firstname" as "first name",  
+    "lastname" as "last name",  
+    "position" as "job title",  
+    "salary" as "monthly salary"  
+
+from "employees";
+
+d)
+Answer:
+select sum("salary") as "total salary"  
+from "employees";
+
+e)
+Answer:
+select "EMPLOYEEID", "FIRSTNAME", "LASTNAME", "DEPARTMENTNAME"  from "EMPLOYEES"  
+
+join "DEPARTMENTS" on "EMPLOYEES"."DEPARTMENTID" = "DEPARTMENTS"."DEPARTMENTID";
+
+
+
+
+
+
+
+
